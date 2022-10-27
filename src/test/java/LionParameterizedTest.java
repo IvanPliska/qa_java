@@ -1,8 +1,12 @@
 import com.example.Feline;
 import com.example.Lion;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,12 +14,17 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-public class LionFirstVariantTest {
+public class LionParameterizedTest {
+
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     private final String sex;
     private final boolean expected;
 
-    public LionFirstVariantTest(String sex, boolean expected) throws Exception {
+    public LionParameterizedTest(String sex, boolean expected) throws Exception {
         this.sex = sex;
         this.expected = expected;
     }
@@ -28,20 +37,22 @@ public class LionFirstVariantTest {
         };
     }
 
+    @Mock
+    Feline mockFeline;
+
     @Test
     public void shouldDoesHaveManeSex() throws Exception {
-        Feline feline = new Feline();
-        Lion lion = new Lion(sex, feline);
+        Lion lion = new Lion(sex, mockFeline);
         boolean actual = lion.doesHaveMane();
         assertEquals("Lion have mane Sex is incorrect", expected, actual);
     }
 
     @Test
     public void shouldEatMeat() throws Exception {
-        Feline feline = new Feline();
-        Lion lion = new Lion(sex, feline );
-        List expected = Arrays.asList("Животные", "Птицы" ,"Рыба");
+        Lion lion = new Lion(sex, mockFeline);
+        List expected = Arrays.asList("Животные", "Птицы", "Рыба");
+        Mockito.when(mockFeline.eatMeat()).thenReturn(expected);
         List actual = lion.getFood();
-        assertEquals("Lion food is incorrect",expected, actual);
+        assertEquals("Lion food is incorrect", expected, actual);
     }
 }

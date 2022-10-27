@@ -20,14 +20,14 @@ public class CatTest {
         Cat cat = new Cat(mockFeline);
         String actual = cat.getSound();
         String expected = "Мяу";
-        assertEquals("Cat sound is incorrect",expected, actual);
+        assertEquals("Cat sound is incorrect", expected, actual);
     }
 
     @Test
     public void shouldGetFood() throws Exception {
         Feline feline = new Feline();
         Cat cat = new Cat(feline);
-        List expected = Arrays.asList("Животные", "Птицы" ,"Рыба");
+        List expected = Arrays.asList("Животные", "Птицы", "Рыба");
         List actual = cat.getFood();
         assertEquals("Cat food is incorrect", expected, actual);
     }
